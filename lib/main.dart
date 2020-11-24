@@ -71,7 +71,7 @@ class MainView extends StatelessWidget {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Page2()));
               },
-              child: Icon(Icons.add_circle_outline),
+              child: Icon(Icons.add_circle),
               backgroundColor: Colors.grey,
             )),
         body: Center(
@@ -106,7 +106,7 @@ class Page2 extends StatelessWidget {
             )),
         body: Center(
             child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Container(
             height: 10,
           ),
@@ -125,10 +125,19 @@ class Page2 extends StatelessWidget {
           Container(
             height: 10,
           ),
-          IconButton(
-            icon: Icon(Icons.add_rounded),
-            onPressed: () {},
-          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: Icon(Icons.add_rounded),
+                onPressed: () {},
+              ),
+              Text(
+                'ADD',
+                style: TextStyle(color: Colors.black, fontSize: 20),
+              )
+            ],
+          )
         ])));
   }
 }
