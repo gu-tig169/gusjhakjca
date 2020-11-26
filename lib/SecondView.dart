@@ -37,7 +37,7 @@ class SecondViewState extends State<SecondView> {
           child: TextField(
             controller: textEditingController,
             decoration: InputDecoration(
-              labelText: 'TODO',
+              labelText: 'e.g Coding',
             ),
           ),
         ),
