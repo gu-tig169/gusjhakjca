@@ -41,6 +41,7 @@ class TaskListViewState extends State<TaskListView> {
       body: Consumer<TaskState>(
           builder: (context, state, child) => TaskList(state.list, filter)),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.grey,
         onPressed: () async {
           var newTask = await Navigator.push(
             context,
