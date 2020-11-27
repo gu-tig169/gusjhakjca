@@ -26,7 +26,7 @@ class Task {
 
 class TaskState extends ChangeNotifier {
   Future getList() async {
-    List<Task> listForApi = (await Api.getTasks()).cast<Task>();
+    List<Task> listForApi = await Api.getTasksApi();
     _list = listForApi;
     notifyListeners();
   }
@@ -35,19 +35,19 @@ class TaskState extends ChangeNotifier {
   List<Task> filteredList;
   List<Task> get list => _list;
 
-  void addTask(Task task) {
-    _list.add(task);
-    notifyListeners();
+  void addTask(Task task) async {
+    await Api.addTaskApi(task);
+    await getList();
   }
 
-  void removeTask(Task task) {
-    _list.remove(task);
-    notifyListeners();
+  void removeTask(Task task) async {
+    await Api.deleteTaskApi(task.id);
+    await getList();
   }
 
-  void changeToggle(Task task, bool newValue) {
+  void changeToggle(Task task, bool newValue) async {
     task.completed = newValue;
-
+    await Api.updateTask(task, task.id);
     notifyListeners();
   }
 

@@ -5,6 +5,7 @@ import 'Task.dart';
 
 void main() {
   var state = TaskState();
+  state.getList();
 
   runApp(
     ChangeNotifierProvider(
