@@ -1,15 +1,38 @@
 import 'package:flutter/material.dart';
+import 'Api.dart';
 
 class Task {
   String title;
   bool completed;
+  String id;
 
-  Task({@required this.title, this.completed = false});
+  Task({@required this.title, this.completed = false, this.id});
+
+  static Map<String, dynamic> toJson(Task task) {
+    return {
+      'title': task.title,
+      'done': task.completed,
+    };
+  }
+
+  static Task fromJson(Map<String, dynamic> json) {
+    return Task(
+      title: json['title'],
+      completed: json['done'],
+      id: json['id'],
+    );
+  }
 }
 
 class TaskState extends ChangeNotifier {
-  List<Task> _list = [];
+  Future getList() async {
+    List<Task> listForApi = (await Api.getTasks()).cast<Task>();
+    _list = listForApi;
+    notifyListeners();
+  }
 
+  List<Task> _list = [];
+  List<Task> filteredList;
   List<Task> get list => _list;
 
   void addTask(Task task) {
@@ -28,14 +51,13 @@ class TaskState extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Task> filterList(List<Task> tasks, String filter) {
-    List<Task> filteredList;
+  List<Task> filterList(List<Task> task, String filter) {
     if (filter == 'all') {
-      filteredList = tasks;
+      filteredList = task;
     } else if (filter == 'done') {
-      filteredList = tasks.where((i) => i.completed).toList();
+      filteredList = task.where((i) => i.completed).toList();
     } else {
-      filteredList = tasks.where((i) => !i.completed).toList();
+      filteredList = task.where((i) => !i.completed).toList();
     }
     return filteredList;
   }

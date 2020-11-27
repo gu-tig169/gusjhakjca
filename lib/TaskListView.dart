@@ -12,20 +12,21 @@ class TaskListView extends StatefulWidget {
 }
 
 class TaskListViewState extends State<TaskListView> {
-  String filter = 'All';
+  String filter = 'all';
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        title: Text('TIG169 TODO'),
-        actions: <Widget>[
+        backgroundColor: Colors.grey,
+        title: Text('TIG169 TODO',
+            style: TextStyle(color: Colors.black, fontSize: 20)),
+        actions: [
           DropdownButton(
             value: filter,
             items: [
-              DropdownMenuItem(value: 'All', child: Text('All')),
-              DropdownMenuItem(value: 'Done', child: Text('Done')),
-              DropdownMenuItem(value: 'Undone', child: Text('Undone')),
+              DropdownMenuItem(value: 'all', child: Text('All')),
+              DropdownMenuItem(value: 'done', child: Text('Done')),
+              DropdownMenuItem(value: 'undone', child: Text('Undone')),
             ],
             style: TextStyle(color: Colors.black87),
             dropdownColor: Colors.grey[300],

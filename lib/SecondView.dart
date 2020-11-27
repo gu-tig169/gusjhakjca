@@ -28,20 +28,25 @@ class SecondViewState extends State<SecondView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        title: Text(widget.title),
+        backgroundColor: Colors.grey,
+        title: Text('TIG169 TODO',
+            style: TextStyle(color: Colors.black, fontSize: 20)),
       ),
-      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
           padding: EdgeInsets.all(20.0),
           child: TextField(
             controller: textEditingController,
             decoration: InputDecoration(
-              labelText: 'e.g Coding',
+              labelText: 'Add task',
+              labelStyle:
+                  TextStyle(color: Colors.black87, fontWeight: FontWeight.w300),
             ),
           ),
         ),
         ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)),
           onPressed: () {
             if (taskTitle != null) {
               Navigator.pop(
