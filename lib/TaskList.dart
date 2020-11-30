@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Task.dart';
+import 'TaskItem.dart';
 
 class TaskList extends StatelessWidget {
-  final List<Task> tasks;
+  final List<TaskItem> tasks;
   final String filter;
 
   TaskList(this.tasks, this.filter);
 
   Widget build(BuildContext context) {
-    List<Task> filteredList = Provider.of<TaskState>(context, listen: false)
+    List<TaskItem> filteredList = Provider.of<TaskState>(context, listen: false)
         .filterList(tasks, filter);
     return ListView(
         children:
@@ -23,7 +23,7 @@ class TaskList extends StatelessWidget {
           value: task.completed,
           onChanged: (bool newValue) {
             var state = Provider.of<TaskState>(context, listen: false);
-            state.changeToggle(task, newValue);
+            state.changeValue(task, newValue);
           }),
       title: StrikeThrough(task),
       trailing: IconButton(
@@ -38,7 +38,7 @@ class TaskList extends StatelessWidget {
 }
 
 class StrikeThrough extends StatelessWidget {
-  final Task task;
+  final TaskItem task;
   StrikeThrough(this.task);
 
   Widget _strikeThroughWidget() {

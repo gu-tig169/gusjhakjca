@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'SecondView.dart';
 import 'TaskList.dart';
-import 'Task.dart';
+import 'TaskItem.dart';
 
 class TaskListView extends StatefulWidget {
   @override
@@ -50,7 +50,7 @@ class TaskListViewState extends State<TaskListView> {
           );
           print(newTask.toString());
           if (newTask != null) {
-            Provider.of<TaskState>(context, listen: false).addTask(newTask);
+            Provider.of<TaskState>(context, listen: false).addTaskItem(newTask);
           }
         },
         child: Icon(Icons.add),

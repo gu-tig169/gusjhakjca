@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'TaskListView.dart';
-import 'Task.dart';
+import 'TaskItem.dart';
 
 void main() {
   var state = TaskState();

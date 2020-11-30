@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'Task.dart';
+import 'TaskItem.dart';
+import 'package:provider/provider.dart';
 
 class SecondView extends StatefulWidget {
   final String title;
@@ -38,7 +39,7 @@ class SecondViewState extends State<SecondView> {
           child: TextField(
             controller: textEditingController,
             decoration: InputDecoration(
-              labelText: 'Add task',
+              labelText: 'Add task item',
               labelStyle:
                   TextStyle(color: Colors.black87, fontWeight: FontWeight.w300),
             ),
@@ -51,7 +52,7 @@ class SecondViewState extends State<SecondView> {
             if (taskTitle != null) {
               Navigator.pop(
                   context,
-                  Task(
+                  TaskItem(
                     title: taskTitle,
                   ));
             } else {
