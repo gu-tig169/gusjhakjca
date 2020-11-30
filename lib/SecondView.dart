@@ -2,29 +2,35 @@ import 'package:flutter/material.dart';
 import 'TaskItem.dart';
 
 class SecondView extends StatefulWidget {
-  final String title;
+  final TaskItem title;
 
   SecondView(this.title);
 
   @override
   State<StatefulWidget> createState() {
-    return SecondViewState();
+    return SecondViewState(title);
   }
 }
 
 class SecondViewState extends State<SecondView> {
-  String taskTitle;
+  String message;
+  bool status;
 
-  TextEditingController textEditingController = new TextEditingController();
+  TextEditingController textEditingController;
 
-  SecondViewState() {
+  SecondViewState(TaskItem task) {
+    this.message = task.title;
+    this.status = task.completed;
+
+    textEditingController = TextEditingController(text: task.title);
     textEditingController.addListener(() {
       setState(() {
-        taskTitle = textEditingController.text;
+        message = textEditingController.text;
       });
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -48,14 +54,11 @@ class SecondViewState extends State<SecondView> {
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(Colors.grey)),
           onPressed: () {
-            if (taskTitle != null) {
-              Navigator.pop(
-                  context,
-                  TaskItem(
-                    title: taskTitle,
-                  ));
-            } else {
+            if (message.isEmpty) {
               print("taskTitle == null");
+            } else {
+              Navigator.pop(
+                  context, TaskItem(title: message, completed: status));
             }
           },
           child: Text('ADD'),

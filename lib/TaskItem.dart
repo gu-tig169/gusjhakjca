@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'Api.dart';
+import 'Constants.dart';
 
 class TaskItem {
   String title;
-  bool completed;
-  String id;
+  bool completed = false;
+  String taskId;
 
-  TaskItem({@required this.title, this.completed = false, this.id});
+  TaskItem({this.title, this.completed, this.taskId});
 
   static Map<String, dynamic> toJson(TaskItem task) {
     return {
@@ -19,53 +20,57 @@ class TaskItem {
     return TaskItem(
       title: json['title'],
       completed: json['done'],
-      id: json['id'],
+      taskId: json['id'],
     );
   }
 }
 
 class TaskState extends ChangeNotifier {
+  //Ursprungliga listan
+  List<TaskItem> _list = [];
+  List<TaskItem> get list => _list;
+
   Future getList() async {
-    List<TaskItem> listForApi = await Api.getTasksApi();
-    _list = listForApi;
+    List<TaskItem> list = await Api.getTasks();
+    _list = list;
     notifyListeners();
   }
 
-//Ursprungliga listan
-  List<TaskItem> _list = [];
-
-  List<TaskItem> get list => _list;
-
-  void addTaskItem(TaskItem task) async {
-    await Api.addTaskApi(task);
-    await getList();
+  void addTask(TaskItem task) async {
+    if (task.title == null) {
+      await getList();
+    } else {
+      await Api.addTask(task);
+      await getList();
+    }
   }
 
   void removeTask(TaskItem task) async {
-    await Api.deleteTask(task.title);
+    await Api.deleteTask(task.taskId);
     await getList();
   }
 
-  bool getDone(index) => list[index].completed;
-
-  void changeValue(TaskItem task, bool newValue) async {
-    task.completed = newValue;
-    await Api.updateTask(
-      task,
-      task.id,
-    );
+  void filterChange(String choice) async {
+    Filter.show = choice;
+    await Api.getTasks();
+    await getList();
+    filteredList(choice);
     notifyListeners();
   }
 
-  List<TaskItem> filterList(List<TaskItem> task, String filter) {
-    List<TaskItem> _filteredList;
-    if (filter == 'all') {
-      _filteredList = task;
-    } else if (filter == 'done') {
-      _filteredList = task.where((i) => i.completed).toList();
+  void changeValue(TaskItem task, bool newValue) async {
+    task.completed = newValue;
+    await Api.updateTask(task);
+    await getList();
+  }
+
+  void filteredList(String choice) {
+    if (choice == 'all') {
+      _list = list.toList();
+    } else if (choice == 'done') {
+      _list = list.where((task) => task.completed == true).toList();
     } else {
-      _filteredList = task.where((i) => !i.completed).toList();
+      _list = list.where((task) => task.completed == false).toList();
     }
-    return _filteredList;
   }
 }

@@ -3,18 +3,19 @@ import 'TaskItem.dart';
 import 'package:http/http.dart' as http;
 
 const API_URL = 'https://todoapp-api-vldfm.ondigitalocean.app';
-const API_KEY = '3fb12e27-9dbb-473e-a876-19b22cb486bc';
+const API_KEY = '3174384b-c753-45e2-a01a-eeea2bfde0bf';
 
 class Api {
   // Lägga till data
-  static Future addTaskApi(TaskItem task) async {
+  static Future addTask(TaskItem task) async {
     Map<String, dynamic> json = TaskItem.toJson(task);
-    var bodyString = jsonEncode(json);
-    await http.post(
-      '$API_URL/todos?key=$API_KEY',
-      body: bodyString,
-      headers: {'Content-Type': 'application/json'},
-    );
+    print(json);
+    await http.post('$API_URL/todos?key=$API_KEY',
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(<String, dynamic>{
+          'title': task.title,
+          'done': task.completed,
+        }));
   }
 
 // Ta bort data med id
@@ -22,22 +23,25 @@ class Api {
     await http.delete('$API_URL/todos/$id?key=$API_KEY');
   }
 
-//  Uppdatera data med id
-  static Future updateTask(TaskItem task, String taskId) async {
-    var json = jsonEncode(TaskItem.toJson(task));
-    await http.put(
-      '$API_URL/todos/$taskId?key=$API_KEY',
-      body: json,
-      headers: {'Content-Type': 'application/json'},
-    );
+//  Uppdatera data
+  static Future updateTask(TaskItem task) async {
+    Map<String, dynamic> json = TaskItem.toJson(task);
+    print(json);
+    var taskId = task.taskId;
+    await http.put('$API_URL/todos/$taskId?key=$API_KEY',
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(<String, dynamic>{
+          'title': task.title,
+          'done': task.completed,
+        }));
   }
 
-  static Future<List<TaskItem>> getTasksApi() async {
+  static Future<List<TaskItem>> getTasks() async {
     var response = await http.get('$API_URL/todos?key=$API_KEY');
     String bodyString = response.body;
     var json = jsonDecode(bodyString);
-    return json.map<TaskItem>((data) {
-      return TaskItem.fromJson(data);
+    return json.map<TaskItem>((task) {
+      return TaskItem.fromJson(task);
     }).toList();
   }
 }
