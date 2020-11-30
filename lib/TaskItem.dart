@@ -8,10 +8,6 @@ class TaskItem {
 
   TaskItem({@required this.title, this.completed = false, this.id});
 
-  /* void isCompleted() {
-    completed = !completed;
-  }*/
-
   static Map<String, dynamic> toJson(TaskItem task) {
     return {
       'title': task.title,
