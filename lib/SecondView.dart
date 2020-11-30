@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'TaskItem.dart';
-import 'package:provider/provider.dart';
 
 class SecondView extends StatefulWidget {
   final String title;
