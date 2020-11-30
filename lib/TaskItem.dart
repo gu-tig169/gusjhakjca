@@ -62,9 +62,9 @@ class TaskState extends ChangeNotifier {
     if (filter == 'all') {
       _filteredList = task;
     } else if (filter == 'done') {
-      _filteredList = task.where((task) => task.completed == true).toList();
+      _filteredList = task.where((i) => i.completed).toList();
     } else {
-      _filteredList = task.where((task) => task.completed == false).toList();
+      _filteredList = task.where((i) => !i.completed).toList();
     }
     return _filteredList;
   }

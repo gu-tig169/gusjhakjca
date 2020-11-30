@@ -10,11 +10,12 @@ class TaskList extends StatelessWidget {
   TaskList(this.tasks, this.filter);
 
   Widget build(BuildContext context) {
-    List<TaskItem> filteredList = Provider.of<TaskState>(context, listen: false)
-        .filterList(tasks, filter);
+    List<TaskItem> _filteredList =
+        Provider.of<TaskState>(context, listen: false)
+            .filterList(tasks, filter);
     return ListView(
         children:
-            filteredList.map((task) => _taskItem(context, task)).toList());
+            _filteredList.map((task) => _taskItem(context, task)).toList());
   }
 
   Widget _taskItem(context, task) {
@@ -30,7 +31,9 @@ class TaskList extends StatelessWidget {
         icon: Icon(Icons.cancel_presentation),
         onPressed: () {
           var state = Provider.of<TaskState>(context, listen: false);
-          state.removeTask(task);
+          state.removeTask(
+            task,
+          );
         },
       ),
     );
