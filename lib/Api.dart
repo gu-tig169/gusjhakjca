@@ -3,7 +3,7 @@ import 'TaskItem.dart';
 import 'package:http/http.dart' as http;
 
 const API_URL = 'https://todoapp-api-vldfm.ondigitalocean.app';
-const API_KEY = '3174384b-c753-45e2-a01a-eeea2bfde0bf';
+const API_KEY = '765b6422-a5d6-4b97-9514-90f3fc7a9668';
 
 class Api {
   // Lägga till data
@@ -18,7 +18,7 @@ class Api {
         }));
   }
 
-// Ta bort data med id
+// Ta bort data
   static Future deleteTask(String id) async {
     await http.delete('$API_URL/todos/$id?key=$API_KEY');
   }
@@ -27,8 +27,8 @@ class Api {
   static Future updateTask(TaskItem task) async {
     Map<String, dynamic> json = TaskItem.toJson(task);
     print(json);
-    var taskId = task.taskId;
-    await http.put('$API_URL/todos/$taskId?key=$API_KEY',
+    var taskid = task.taskId;
+    await http.put('$API_URL/todos/$taskid?key=$API_KEY',
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(<String, dynamic>{
           'title': task.title,
@@ -40,8 +40,8 @@ class Api {
     var response = await http.get('$API_URL/todos?key=$API_KEY');
     String bodyString = response.body;
     var json = jsonDecode(bodyString);
-    return json.map<TaskItem>((task) {
-      return TaskItem.fromJson(task);
+    return json.map<TaskItem>((todo) {
+      return TaskItem.fromJson(todo);
     }).toList();
   }
 }
