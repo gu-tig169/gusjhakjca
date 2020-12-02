@@ -14,7 +14,7 @@ class Api {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(<String, dynamic>{
           'title': task.title,
-          'done': task.completed,
+          'done': task.status,
         }));
   }
 
@@ -32,7 +32,7 @@ class Api {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(<String, dynamic>{
           'title': task.title,
-          'done': task.completed,
+          'done': task.status,
         }));
   }
 

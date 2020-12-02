@@ -46,7 +46,7 @@ class TaskListView extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    SecondView(TaskItem(title: null, completed: false))),
+                    SecondView(TaskItem(title: null, status: false))),
           );
           if (newTask != null) {
             Provider.of<TaskState>(context, listen: false).addTask(newTask);

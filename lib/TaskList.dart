@@ -12,10 +12,10 @@ class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-        children: _list.map((task) => taskItem(context, task)).toList());
+        children: _list.map((task) => taskWidget(context, task)).toList());
   }
 
-  Widget taskItem(context, task) {
+  Widget taskWidget(context, task) {
     return Card(
         margin: const EdgeInsets.all(5.0),
         child: Container(
@@ -37,11 +37,12 @@ class TaskList extends StatelessWidget {
                     color: Colors.black87,
                     fontWeight: FontWeight.w300,
                     fontSize: 18.0,
-                    decoration: task.completed == false
+                    decoration: task.status == false
                         ? TextDecoration.none
                         : TextDecoration.lineThrough,
                     decorationThickness: 2.18)),
-            value: task.completed,
+            value: task.status,
+            tristate: true,
             onChanged: (bool newValue) {
               var state = Provider.of<TaskState>(context, listen: false);
               state.changeValue(task, newValue);
@@ -57,26 +58,3 @@ class TaskList extends StatelessWidget {
         ));
   }
 }
-/*
-class StrikeThrough extends StatelessWidget {
-  final TaskItem task;
-  StrikeThrough(this.task);
-
-  Widget _strikeThroughWidget() {
-    if (task.completed == false) {
-      return Text(task.title);
-    } else {
-      return Text(
-        task.title,
-        style: TextStyle(
-          decoration: TextDecoration.lineThrough,
-        ),
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _strikeThroughWidget();
-  }
-}*/

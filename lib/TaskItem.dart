@@ -4,22 +4,22 @@ import 'Constants.dart';
 
 class TaskItem {
   String title;
-  bool completed = false;
+  bool status = false;
   String taskId;
 
-  TaskItem({this.title, this.completed, this.taskId});
+  TaskItem({this.title, this.status, this.taskId});
 
   static Map<String, dynamic> toJson(TaskItem task) {
     return {
       'title': task.title,
-      'done': task.completed,
+      'done': task.status,
     };
   }
 
   static TaskItem fromJson(Map<String, dynamic> json) {
     return TaskItem(
       title: json['title'],
-      completed: json['done'],
+      status: json['done'],
       taskId: json['id'],
     );
   }
@@ -59,7 +59,7 @@ class TaskState extends ChangeNotifier {
   }
 
   void changeValue(TaskItem task, bool newValue) async {
-    task.completed = newValue;
+    task.status = newValue;
     await Api.updateTask(task);
     await getList();
   }
@@ -68,9 +68,9 @@ class TaskState extends ChangeNotifier {
     if (choice == 'all') {
       _list = list.toList();
     } else if (choice == 'done') {
-      _list = list.where((task) => task.completed == true).toList();
-    } else {
-      _list = list.where((task) => task.completed == false).toList();
+      _list = list.where((task) => task.status == true).toList();
+    } else if (choice == 'undone') {
+      _list = list.where((task) => task.status == false).toList();
     }
   }
 }

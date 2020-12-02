@@ -14,13 +14,13 @@ class SecondView extends StatefulWidget {
 
 class SecondViewState extends State<SecondView> {
   String message;
-  bool status;
+  bool value = true;
 
   TextEditingController textEditingController;
 
   SecondViewState(TaskItem task) {
     this.message = task.title;
-    this.status = task.completed;
+    this.value = task.status;
 
     textEditingController = TextEditingController(text: task.title);
     textEditingController.addListener(() {
@@ -57,8 +57,7 @@ class SecondViewState extends State<SecondView> {
             if (message.isEmpty) {
               print("taskTitle == null");
             } else {
-              Navigator.pop(
-                  context, TaskItem(title: message, completed: status));
+              Navigator.pop(context, TaskItem(title: message, status: value));
             }
           },
           child: Text('ADD'),
