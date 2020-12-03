@@ -4,10 +4,10 @@ import 'Constants.dart';
 
 class TaskItem {
   String title;
-  bool status = false;
+  bool status;
   String taskId;
 
-  TaskItem({this.title, this.status, this.taskId});
+  TaskItem({this.title, this.status = false, this.taskId});
 
   static Map<String, dynamic> toJson(TaskItem task) {
     return {
@@ -60,7 +60,7 @@ class TaskState extends ChangeNotifier {
 
   void changeValue(TaskItem task, bool newValue) async {
     task.status = newValue;
-    await Api.updateTask(task);
+    await Api.updateTask(task.taskId, task);
     await getList();
   }
 
